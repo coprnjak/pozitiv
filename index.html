@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pozitiv Zagreb</title>
+<meta name="description" content="Pozitiv – photo and video services, Zagreb.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE quiet photographer's portfolio: the photographs talk, the type whispers
+   IDEA a gallery wall with small lowercase labels, organised like bevkperovic.com
+   PICTURE full-screen photo on the home page, a contained-image grid for work, one photo per screen in a project
+   COLOUR near-white paper #fafafa and black ink; grey for secondary labels; night is the negative
+   TYPE Manrope 500/600/700 only, 15px, lowercase labels
+   LAYOUT header line on top; content fills the rest of the screen; grid 4 → 3 → 2 columns */
+:root{color-scheme:light dark;--bg:light-dark(#fafafa,#121212);--ink:light-dark(#111111,#ececec);--mute:light-dark(#6b6b6b,#9a9a9a);--ph:light-dark(#ececec,#1d1d1d);--ph2:light-dark(#dedede,#2a2a2a);--hd:64px;--gut:max(2.4vw,16px)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:500 15px/1.5 Manrope,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+img{max-width:100%}
+.lc{text-transform:lowercase}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.top{--sp:clamp(24px,3.4vw,56px);position:sticky;top:0;z-index:20;background:var(--bg);display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--sp);padding:10px var(--gut);min-height:64px}
+.logo{font-weight:700;font-size:16px;padding:8px 0}
+.nl{font-weight:600;padding:8px 0}
+.filters{display:flex;flex-wrap:wrap;column-gap:12px;margin-left:calc(14px - var(--sp))}
+.filters a{color:var(--mute);padding:8px 0}
+.filters a:hover,.filters a[aria-current]{color:var(--ink)}
+.filters a[aria-current]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+body:not([data-view=work]):not([data-view=project]) .filters{display:none}
+@media(max-width:700px){
+.top{--sp:24px}
+.filters{order:9;flex-basis:100%;margin:0 0 2px}
+body[data-view=project] .filters{display:none}
+}
+
+.stage,.viewer{position:relative;height:calc(100svh - var(--hd));min-height:380px;display:flex;flex-direction:column}
+.slides{position:relative;flex:1}
+.slide{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .9s ease}
+.slide.on{opacity:1;z-index:1}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide .ph{position:absolute;inset:0;border:0}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:4px var(--gut);min-height:56px;position:relative;z-index:4;background:var(--bg)}
+.bar a,.bar .toggle{font-weight:600}
+.count{font-variant-numeric:tabular-nums;white-space:nowrap}
+.zone{position:absolute;top:0;bottom:0;width:38%;z-index:3}
+.zone.prev{left:0;cursor:w-resize}
+.zone.next{right:0;cursor:e-resize}
+@media(hover:none){.zone{display:none}}
+
+.ph{display:block;background:var(--ph);border:1px solid var(--ph2)}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,3.6vw,56px) clamp(16px,3vw,48px);padding:clamp(24px,5vw,64px) var(--gut) 96px}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cell{display:flex;flex-direction:column;gap:10px}
+.cell[hidden]{display:none}
+.frame{aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.frame img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.name{text-align:center;color:var(--mute);font-size:14px;line-height:1.35;min-height:2.7em;text-wrap:balance;transition:opacity .2s}
+@media(hover:hover){.cell .name{opacity:0}.cell:hover .name,.cell:focus-visible .name{opacity:1;color:var(--ink)}}
+.empty{color:var(--mute);padding:48px var(--gut)}
+
+.track{flex:1;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.shot{flex:0 0 100%;scroll-snap-align:center;margin:0;display:flex;align-items:center;justify-content:center;padding:clamp(8px,2vh,24px) clamp(16px,9vw,160px)}
+.shot img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.shot .ph{height:min(100%,70vh);max-width:100%}
+.toggle{display:inline-flex;align-items:center;gap:12px;min-height:44px;text-align:left}
+.sign{flex:none;width:11px;height:11px;position:relative;display:inline-block}
+.sign::before,.sign::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;margin-top:-.75px;background:currentColor;transition:transform .2s}
+.sign::after{transform:rotate(90deg)}
+[aria-expanded=true] .sign::after,details[open]>summary .sign::after{transform:rotate(0)}
+.panel{position:absolute;left:0;right:0;bottom:56px;z-index:5;padding:28px var(--gut) 24px;background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);max-height:calc(100% - 56px);overflow:auto}
+.panel[hidden]{display:none}
+.panel .meta{margin:0 0 16px}
+.panel .txt{max-width:52ch}
+.panel .more{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:20px}
+.panel .more a{color:var(--mute);padding:6px 0}
+.panel .more a:hover{color:var(--ink)}
+
+.txt p{margin:0 0 12px}
+.txt.cols{columns:3 13em;column-gap:32px}
+.txt.cols p{margin:0}
+
+.info{padding:clamp(40px,16vh,180px) var(--gut) 0;min-height:calc(100svh - var(--hd));display:flex;flex-direction:column}
+.info address{font-style:normal;line-height:1.6;margin-bottom:44px}
+.info address a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.info details{max-width:1000px}
+.info summary{list-style:none;display:inline-flex;align-items:center;gap:14px;font-weight:600;min-height:40px;cursor:pointer}
+.info summary::-webkit-details-marker{display:none}
+.info details .txt{padding:6px 0 28px 25px;max-width:62ch}
+.info details .txt.cols{max-width:none}
+.foot{margin-top:auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;color:var(--mute);font-size:13px;padding:72px 0 24px}
+
+@media(max-width:600px){
+.shot{padding:8px 0}
+.info details .txt{padding-left:0}
+}
+@media(prefers-reduced-motion:reduce){.slide,.sign::before,.sign::after,.name{transition:none}}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+  <a class="logo lc" href="#" id="logo">pozitiv</a>
+  <a class="nl" href="#work" id="nav-work">work</a>
+  <nav class="filters lc" id="filters" aria-label="Categories"></nav>
+  <a class="nl" href="#info" id="nav-info">info</a>
+</header>
+<main id="app" aria-live="polite"></main>
+<script>
+{
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const src = p => esc(String(p || '').trim().replace(/^\/+/, ''));
+const RESERVED = new Set(['home','work','info','settings','sidebar','customize','upgrade','downloads']);
+const slugify = t => {
+  let s = String(t || '').toLowerCase().replace(/đ/g, 'd').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'project';
+  if (RESERVED.has(s) || s.startsWith('work-') || s.startsWith('comment-')) s = 'p-' + s;
+  return s;
+};
+const lines = t => String(t || '').split('\n').map(x => x.trim()).filter(Boolean);
+const fmt = t => String(t || '').trim().split(/\n\s*\n/).filter(Boolean).map(p => '<p>' + esc(p.trim()).replace(/\n/g, '<br>') + '</p>').join('');
+const RATIOS = [[3,2],[4,5],[1,1],[16,10],[3,4],[3,2],[2,3],[5,4]];
+const ph = (i, mode) => {
+  const [w, h] = RATIOS[i % RATIOS.length];
+  const size = mode === 'shot' ? '' : `width:${w >= h ? 100 : Math.round(w / h * 100)}%;`;
+  return `<span class="ph" style="aspect-ratio:${w}/${h};${size}" aria-hidden="true"></span>`;
+};
+
+let site = {}, projects = [], cats = [], timer = null, cleanup = null;
+
+function setNav(view, cat) {
+  document.body.dataset.view = view;
+  const mark = (el, on) => on ? el.setAttribute('aria-current', 'page') : el.removeAttribute('aria-current');
+  mark($('#nav-work'), view === 'work' || view === 'project');
+  mark($('#nav-info'), view === 'info');
+  const f = $('#filters');
+  f.innerHTML = ['all', ...cats].map(c => {
+    const href = c === 'all' ? '#work' : '#work-' + encodeURIComponent(c);
+    const on = view === 'work' && c === cat;
+    return `<a href="${href}"${on ? ' aria-current="true"' : ''}>${esc(c)}</a>`;
+  }).join('');
+}
+
+function keys(handler) {
+  document.addEventListener('keydown', handler);
+  cleanup = () => document.removeEventListener('keydown', handler);
+}
+
+function home() {
+  setNav('home');
+  document.title = (site.name || 'pozitiv') + ' – photo and video';
+  let items;
+  if (site.slides.length) items = site.slides.map(img => ({ img, title: '', href: '' }));
+  else {
+    items = projects.filter(p => p.photos.length).map(p => ({ img: p.photos[0], title: p.title, href: '#' + p.slug }));
+    if (!items.length) items = projects.slice(0, 5).map(p => ({ img: '', title: p.title, href: '#' + p.slug }));
+  }
+  if (!items.length) { app.innerHTML = '<p class="empty">No photographs yet.</p>'; return; }
+  app.innerHTML = `<section class="stage" aria-roledescription="carousel" aria-label="Selected photographs">
+    <h1 class="sr">${esc(site.name || 'pozitiv')}</h1>
+    <div class="slides">
+      ${items.map((s, i) => `<figure class="slide${i ? '' : ' on'}">${s.img ? `<img src="${src(s.img)}" alt="${esc(s.title)}"${i ? ' loading="lazy"' : ''} decoding="async">` : `<span class="ph"></span>`}</figure>`).join('')}
+      ${items.length > 1 ? '<button class="zone prev" aria-label="Previous photograph"></button><button class="zone next" aria-label="Next photograph"></button>' : ''}
+    </div>
+    <div class="bar"><a class="cap lc" id="cap" href="#work"></a><span class="count" id="count"></span></div>
+  </section>`;
+  const slides = [...app.querySelectorAll('.slide')];
+  const cap = $('#cap'), count = $('#count');
+  let cur = 0;
+  const show = i => {
+    cur = (i + slides.length) % slides.length;
+    slides.forEach((s, k) => s.classList.toggle('on', k === cur));
+    const it = items[cur];
+    cap.textContent = it.title || 'work';
+    cap.setAttribute('href', it.href || '#work');
+    count.textContent = slides.length > 1 ? `${cur + 1} / ${slides.length}` : '';
+  };
+  const restart = () => {
+    clearInterval(timer);
+    if (!reduced && slides.length > 1) timer = setInterval(() => show(cur + 1), 5000);
+  };
+  app.querySelector('.zone.prev')?.addEventListener('click', () => { show(cur - 1); restart(); });
+  app.querySelector('.zone.next')?.addEventListener('click', () => { show(cur + 1); restart(); });
+  keys(e => {
+    if (e.key === 'ArrowRight') { show(cur + 1); restart(); }
+    if (e.key === 'ArrowLeft') { show(cur - 1); restart(); }
+  });
+  show(0);
+  restart();
+}
+
+function work(cat) {
+  if (cat !== 'all' && !cats.includes(cat)) cat = 'all';
+  setNav('work', cat);
+  document.title = 'work – ' + (site.name || 'pozitiv');
+  if (!projects.length) { app.innerHTML = '<p class="empty">No work yet.</p>'; return; }
+  app.innerHTML = `<h1 class="sr">Work</h1><section class="grid">
+    ${projects.map((p, i) => `<a class="cell" href="#${esc(p.slug)}"${cat !== 'all' && p.category !== cat ? ' hidden' : ''}>
+      <span class="frame">${p.photos.length ? `<img src="${src(p.photos[0])}" alt="" loading="lazy" decoding="async">` : ph(i)}</span>
+      <span class="name lc">${esc(p.title)}</span>
+    </a>`).join('')}
+  </section>`;
+}
+
+function project(p) {
+  setNav('project');
+  document.title = p.title + ' – ' + (site.name || 'pozitiv');
+  const idx = projects.indexOf(p);
+  const prevP = projects[(idx - 1 + projects.length) % projects.length];
+  const nextP = projects[(idx + 1) % projects.length];
+  const shots = p.photos.length ? p.photos : [null];
+  const meta = [p.category && 'category: ' + p.category, p.client && 'client: ' + p.client, p.year && 'year: ' + p.year].filter(Boolean);
+  app.innerHTML = `<section class="viewer" aria-label="${esc(p.title)}">
+    <h1 class="sr">${esc(p.title)}</h1>
+    <div class="track" id="track" tabindex="-1">
+      ${shots.map((s, i) => `<figure class="shot">${s ? `<img src="${src(s)}" alt="${esc(p.title)}, ${i + 1} of ${shots.length}"${i > 1 ? ' loading="lazy"' : ''} decoding="async">` : ph(idx, 'shot')}</figure>`).join('')}
+    </div>
+    ${shots.length > 1 ? '<button class="zone prev" aria-label="Previous photograph"></button><button class="zone next" aria-label="Next photograph"></button>' : ''}
+    <div class="panel" id="panel" hidden>
+      ${meta.length ? `<p class="meta">${meta.map(esc).join('<br>')}</p>` : ''}
+      <div class="txt">${fmt(p.text)}</div>
+      ${projects.length > 1 ? `<p class="more"><a href="#${esc(prevP.slug)}">← <span class="lc">${esc(prevP.title)}</span></a><a href="#${esc(nextP.slug)}"><span class="lc">${esc(nextP.title)}</span> →</a></p>` : ''}
+    </div>
+    <div class="bar">
+      <button class="toggle" id="toggle" aria-expanded="false" aria-controls="panel"><span class="sign" aria-hidden="true"></span><span class="lc">${esc(p.title)}</span></button>
+      <span class="count" id="count">${shots.length > 1 ? `1 / ${shots.length}` : ''}</span>
+    </div>
+  </section>`;
+  const track = $('#track'), count = $('#count'), panel = $('#panel'), toggle = $('#toggle');
+  let cur = 0, raf = 0;
+  const go = i => {
+    cur = (i + shots.length) % shots.length;
+    track.scrollTo({ left: cur * track.clientWidth, behavior: reduced ? 'auto' : 'smooth' });
+  };
+  track.addEventListener('scroll', () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      cur = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      if (shots.length > 1) count.textContent = `${cur + 1} / ${shots.length}`;
+    });
+  });
+  const ro = new ResizeObserver(() => { track.scrollLeft = cur * track.clientWidth; });
+  ro.observe(track);
+  const setPanel = open => { panel.hidden = !open; toggle.setAttribute('aria-expanded', String(open)); };
+  toggle.addEventListener('click', () => setPanel(panel.hidden));
+  app.querySelector('.zone.prev')?.addEventListener('click', () => go(cur - 1));
+  app.querySelector('.zone.next')?.addEventListener('click', () => go(cur + 1));
+  const onKey = e => {
+    if (e.key === 'ArrowRight') go(cur + 1);
+    if (e.key === 'ArrowLeft') go(cur - 1);
+    if (e.key === 'Escape') setPanel(false);
+  };
+  document.addEventListener('keydown', onKey);
+  cleanup = () => { document.removeEventListener('keydown', onKey); ro.disconnect(); };
+}
+
+function info() {
+  setNav('info');
+  document.title = 'info – ' + (site.name || 'pozitiv');
+  const addr = [esc(site.name || 'pozitiv'), ...lines(site.address).map(esc)];
+  if (site.phone) addr.push('T – ' + esc(site.phone));
+  if (site.email) addr.push(`E – <a href="mailto:${esc(site.email)}">${esc(site.email)}</a>`);
+  if (site.facebook) addr.push(`<a href="${esc(site.facebook)}" rel="noopener">facebook</a>`);
+  app.innerHTML = `<section class="info">
+    <h1 class="sr">Info</h1>
+    <address>${addr.join('<br>')}</address>
+    ${site.sections.map(s => {
+      const ls = lines(s.text);
+      const isList = ls.length > 6 && ls.every(l => l.length < 44) && !/\n\s*\n/.test(s.text || '');
+      const body = isList ? ls.map(l => `<p>${esc(l)}</p>`).join('') : fmt(s.text);
+      return `<details><summary><span class="sign" aria-hidden="true"></span><span class="lc">${esc(s.title)}</span></summary><div class="txt${isList ? ' cols' : ''}">${body}</div></details>`;
+    }).join('')}
+    <div class="foot"><span>© ${new Date().getFullYear()} ${esc(site.name || 'pozitiv')}</span><span>photo and video, Zagreb</span></div>
+  </section>`;
+}
+
+function route() {
+  clearInterval(timer);
+  if (cleanup) { cleanup(); cleanup = null; }
+  window.scrollTo(0, 0);
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (!h || h === 'home') return home();
+  if (h === 'info') return info();
+  if (h === 'work') return work('all');
+  if (h.startsWith('work-')) return work(h.slice(5));
+  const p = projects.find(x => x.slug === h);
+  return p ? project(p) : work('all');
+}
+
+const header = $('#top');
+const hro = new ResizeObserver(() => document.documentElement.style.setProperty('--hd', header.offsetHeight + 'px'));
+hro.observe(header);
+
+const load = f => fetch(f, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(f); return r.json(); });
+Promise.all([load('data/site.json'), load('data/projects.json')]).then(([s, p]) => {
+  site = s && typeof s === 'object' ? s : {};
+  site.slides = (Array.isArray(site.slides) ? site.slides : site.slides ? [site.slides] : []).filter(Boolean);
+  site.sections = Array.isArray(site.sections) ? site.sections.filter(x => x && x.title) : [];
+  const seen = new Set();
+  projects = (Array.isArray(p) ? p : []).filter(x => x && x.title).map(x => {
+    let slug = slugify(x.title), n = 2;
+    while (seen.has(slug)) slug = slugify(x.title) + '-' + n++;
+    seen.add(slug);
+    const photos = (Array.isArray(x.photos) ? x.photos : x.photos ? [x.photos] : []).filter(Boolean);
+    return { ...x, slug, photos, category: String(x.category || '').trim() };
+  });
+  cats = [...new Set(projects.map(x => x.category).filter(Boolean))];
+  if (site.name) $('#logo').textContent = site.name;
+  route();
+  addEventListener('hashchange', route);
+}).catch(() => {
+  app.innerHTML = '<p class="empty">The content could not be loaded. Please try again.</p>';
+});
+}
+</script>
+</body>
+</html>

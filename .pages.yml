@@ -1,0 +1,95 @@
+# Pages CMS – admin za stranicu Pozitiv (app.pagescms.org)
+# Fotografije se spremaju u mapu images/, a podaci u data/*.json
+
+media:
+  input: images
+  output: /images
+  categories: [image]
+  rename: safe
+
+content:
+  - name: projects
+    label: Radovi
+    type: file
+    path: data/projects.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Naslov
+        type: string
+        required: true
+      - name: category
+        label: Kategorija
+        description: Po kategorijama se filtriraju radovi (all / architecture / events ...)
+        type: select
+        options:
+          values:
+            - name: architecture
+              label: architecture (arhitektura)
+            - name: events
+              label: events (događanja)
+            - name: portraits
+              label: portraits (portreti)
+            - name: commissions
+              label: commissions (narudžbe)
+            - name: other
+              label: other (ostalo)
+      - name: year
+        label: Godina
+        type: string
+      - name: client
+        label: Klijent
+        type: string
+      - name: text
+        label: Opis
+        description: Prikazuje se kad se na stranici projekta klikne +. Prazan red = novi odlomak.
+        type: text
+      - name: photos
+        label: Fotografije
+        description: Prva fotografija je naslovna u mreži radova. Redoslijed se mijenja povlačenjem.
+        type: image
+        options:
+          multiple:
+            max: 300
+
+  - name: site
+    label: Naslovnica i info
+    type: file
+    path: data/site.json
+    format: json
+    fields:
+      - name: name
+        label: Ime (gore lijevo)
+        type: string
+      - name: slides
+        label: Fotografije na naslovnici
+        description: Ako je prazno, naslovnica sama vrti prve fotografije svih radova.
+        type: image
+        options:
+          multiple:
+            max: 30
+      - name: address
+        label: Adresa
+        type: text
+      - name: email
+        label: E-mail
+        type: string
+      - name: phone
+        label: Telefon
+        type: string
+      - name: facebook
+        label: Facebook link
+        type: string
+      - name: sections
+        label: Rubrike na stranici info
+        description: Svaka rubrika se otvara klikom na +. Kod popisa (npr. klijenti) svaki naziv u svoj red.
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Naslov rubrike
+            type: string
+          - name: text
+            label: Tekst
+            type: text
