@@ -1,82 +1,14 @@
 [
   {
-    "title": "Fishermen",
-    "category": "commissions",
-    "year": "",
-    "client": "Greenpeace",
-    "text": "Priča o malim ribarima. Naručitelj posla Greenpeace.\n\nA story about small-scale fishermen. Commissioned by Greenpeace.",
-    "photos": []
-  },
-  {
-    "title": "The Last Socialist Artefact",
-    "category": "commissions",
-    "year": "",
-    "client": "",
-    "text": "Commissioned work for “The Last Socialist Artefact”, produced by Ankica Jurić Tilić.",
-    "photos": []
-  },
-  {
-    "title": "Studentski dom Palacin, Šibenik",
+    "title": "Rekonstrukcija Trga hrvatskih branitelja i središta Garešnice ",
     "category": "architecture",
-    "year": "",
+    "year": "2026",
     "client": "3E Projekti",
-    "text": "",
-    "photos": []
-  },
-  {
-    "title": "Silba homes",
-    "category": "architecture",
-    "year": "",
-    "client": "",
-    "text": "Commissioned work for various architectural bureaus.",
-    "photos": []
-  },
-  {
-    "title": "Architecture",
-    "category": "architecture",
-    "year": "",
-    "client": "",
-    "text": "Stvarno volimo arhitekturu.\nWe really love architecture.",
-    "photos": []
-  },
-  {
-    "title": "Erste Foundation",
-    "category": "events",
-    "year": "",
-    "client": "Erste Stiftung",
-    "text": "",
-    "photos": []
-  },
-  {
-    "title": "Events",
-    "category": "events",
-    "year": "",
-    "client": "",
-    "text": "Photos of various events from music concerts, corporate events, fashion shows, and cultural, social and other events in a broader sense.",
-    "photos": []
-  },
-  {
-    "title": "Dog disc, tricks, nosework, frisbee",
-    "category": "events",
-    "year": "",
-    "client": "KOSSP, Zagreb",
-    "text": "",
-    "photos": []
-  },
-  {
-    "title": "Portraits",
-    "category": "portraits",
-    "year": "",
-    "client": "",
-    "text": "Milena Marković, writer\nKarpo Godina, cinematographer, director, editor\nVladimir Dodig Trokut, artist\nIvan Goran Vitez, director",
-    "photos": []
-  },
-  {
-    "title": "Other",
-    "category": "other",
-    "year": "",
-    "client": "",
-    "text": "Persona International\nGCS – Global Clearance Solutions\nMultimedia work and an underwater shot for the theatre show “The Killer”, VRUM and HNK Varaždin\nPhoto book for SO-UPS natural cosmetics\nPromotional campaign for Festival od riči – Šušur",
-    "photos": []
+    "text": "Arhitektonski ured: 3E PROJEKTI d.o.o.\nGlavna projektantica: Mia Kos\nInvestitor: Grad Garešnica\nIzvođač radova: Novi stan d.o.o. iz Kapelice\nPovršina obuhvata: 16.900 m²\nGodina projektiranja: 2023.\nGodina realizacije: 2026.\nKonačna vrijednost investicije: 3.200.000 eura.",
+    "photos": [
+      "/images/dsf7977.jpg",
+      "/images/dsf8001.jpg",
+      "/images/dsf7896.jpg"
+    ]
   }
 ]
