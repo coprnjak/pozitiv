@@ -1,0 +1,66 @@
+name: Objava stranice
+
+# Pokreće se nakon svakog spremanja (i iz Pages CMS-a):
+# 1. smanji nove fotografije za web i spremi ih natrag u repozitorij
+# 2. objavi stranicu na GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Kad stigne više spremanja zaredom, jedno se izvršava, a čeka samo najnovije.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instaliraj Pillow
+        run: pip install --quiet pillow
+
+      - name: Smanji fotografije
+        run: python .github/scripts/optimize_images.py images
+
+      - name: Spremi smanjene fotografije
+        run: |
+          if [ -n "$(git status --porcelain images)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add images
+            git commit -m "Automatski smanjene fotografije za web"
+            for attempt in 1 2 3; do
+              git pull --rebase origin main && git push origin HEAD:main && break
+              sleep 5
+            done
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

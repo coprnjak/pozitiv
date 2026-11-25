@@ -11,7 +11,7 @@ Stranica za Pozitiv (fotopozitiv.net). Izgled je složen po uzoru na bevkperovic
 
 Savjeti:
 - Prva fotografija u radu je naslovna u mreži radova.
-- Fotografije izvezi za web: oko 2500 px po dužoj strani i do 1–2 MB po fotografiji. Stranica se tako brže učitava, a GitHub ima ograničenje veličine.
+- Fotografije se nakon uploada **same smanje za web** (najviše 2500 px po dužoj strani, JPEG kvaliteta 85). To radi `.github/workflows/objava.yml`, koji nakon svakog spremanja i objavljuje stranicu.
 - **Naslovnica i info**: tekstovi, kontakt, rubrike (about, clients…) i fotografije za naslovnicu. Ako je popis fotografija za naslovnicu prazan, naslovnica sama vrti prve fotografije svih radova.
 
 ## Što je gdje
@@ -21,3 +21,5 @@ Savjeti:
 - `data/site.json` – naslovnica, kontakt, info rubrike (uređuje se kroz admin)
 - `images/` – fotografije
 - `.pages.yml` – postavke admina (Pages CMS)
+- `.github/workflows/objava.yml` – smanjivanje fotografija i objava na GitHub Pages
+- `.github/scripts/optimize_images.py` – skripta koja smanjuje fotografije
