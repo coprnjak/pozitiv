@@ -83,5 +83,17 @@
       "/images/dsc5410-1.jpg",
       "/images/dsc4552-1.jpg"
     ]
+  },
+  {
+    "title": "Apartman Maribella, Zagreb",
+    "category": "commissions",
+    "year": "2023.",
+    "text": "Dio fotografija napravljenih za apartman Maribella u centru Zagreba.",
+    "photos": [
+      "/images/apartmanmi-5.jpg",
+      "/images/apartmanmi-30.jpg",
+      "/images/apartmanmi-18.jpg",
+      "/images/apartmanmi-12.jpg"
+    ]
   }
 ]
